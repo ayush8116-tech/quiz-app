@@ -1,12 +1,12 @@
-export const createFragment = ([tag, attributes, content]) => {
+export const createFragment = ([tag, attributes, ...content]) => {
   const element = document.createElement(tag);
 
   for (const key in attributes) {
     element.setAttribute(key, attributes[key]);
   }
-
-  if (typeof content === "string" || typeof content === "number") {
-    element.innerText = content;
+  
+  if (typeof content[0] === "string") {
+    element.innerText = content[0];
     return element;
   }
 
@@ -16,13 +16,11 @@ export const createFragment = ([tag, attributes, content]) => {
   return element;
 };
 
-export const format = (data) => data[0].toUpperCase() + data.slice(1);
-
 export const ELEMENT = {
-  FORM : "form",
-  LEGEND : "legend",
-  FIELDSET : "fieldset",
-  DIV : "div",
-  LABEL : "label",
-  INPUT : "input",
-}
+  FORM: "form",
+  LEGEND: "legend",
+  FIELDSET: "fieldset",
+  DIV: "div",
+  LABEL: "label",
+  INPUT: "input",
+};

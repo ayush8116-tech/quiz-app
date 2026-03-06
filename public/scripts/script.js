@@ -1,52 +1,52 @@
 import { createFragment, ELEMENT } from "./generate_fragment.js";
 
 const { FORM, LEGEND, FIELDSET, DIV, LABEL, INPUT } = ELEMENT;
-const cls = (className) => ({ class : className })
+const cls = (className) => ({ class: className });
 
-const createOption = (optionNum) => {
+const createOption = (optionName, optionNum) => {
   return [
-            DIV,
-            cls("option"),
-            [
-              [
-                LABEL,
-                { for : `option-${optionNum}` },
-                `option ${optionNum}`
-              ],
-              [
-                INPUT, 
-                { type : "radio", name : "option", value : `option-${optionNum}` },
-                ""
-              ],
-            ]
-          ]
-}
+    DIV,
+    cls("option"),
+    [
+      INPUT,
+      { type: "radio", name: "option", value: `option-${optionNum}` },
+    ],
+    [
+      LABEL,
+      { for: `option-${optionNum}` },
+      optionName,
+    ],
+  ];
+};
+
+const quiz = {
+  question: "1. Who is the current captain of Indian Cricket Team ?",
+  options: [
+    "Abhishek Sharma",
+    "Rinku Singh",
+    "Surya Kumar Yadav",
+    "Virat Kohli",
+  ],
+};
 
 window.onload = () => {
-  const main = document.querySelector("section");
+  const main = document.querySelector("#quiz-container");
 
-  const formFragment = [ 
+  const formFragment = [
     FORM,
     cls("question-box"),
-     [
+    [
+      FIELDSET,
+      cls("question-field"),
       [
-        FIELDSET,
-        cls("question-field"),
-        [
-          [
-            LEGEND,
-            cls("question"),
-            "Question 1"
-          ],
-          createOption(1),
-          createOption(2),
-          createOption(3),
-          createOption(4),
-        ]
-      ]
-    ]
-    ];
+        LEGEND,
+        cls("question"),
+        quiz.question,
+      ],
+      ...quiz.options.map((option, idx) => createOption(option, idx + 1)),
+    ],
+  ];
 
-  const form = createFragment(formFragment); 
+  const form = createFragment(formFragment);
   main.appendChild(form);
 };

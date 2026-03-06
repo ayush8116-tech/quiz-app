@@ -5,6 +5,11 @@
   border: 0;
 }
 
-form {
+.question-box {
   margin: 40px;
+}
+
+.option {
+  display: flex;
+  gap: 10px;
 }
